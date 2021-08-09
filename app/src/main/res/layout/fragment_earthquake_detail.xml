@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.EarthquakeDetailFragment">
+
+        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutData"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            map:cameraZoom="7"
+            map:liteMode="true"
+            tools:ignore="FragmentTagUsage" />
+
+        <LinearLayout
+            android:id="@+id/layoutData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/common_padding_min"
+            app:layout_constraintEnd_toEndOf="@id/map"
+            app:layout_constraintStart_toStartOf="@id/map"
+            app:layout_constraintTop_toBottomOf="@id/map">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/Widget.EarthquakeMonitor.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                tools:text="Mexico City" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/Widget.EarthquakeMonitor.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/common_padding_min"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    app:drawableStartCompat="@drawable/ic_calendar"
+                    app:drawableTint="?attr/colorPrimaryVariant"
+                    tools:text="4 agosto. 2021" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    style="@style/Widget.EarthquakeMonitor.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    app:drawableStartCompat="@drawable/ic_time"
+                    app:drawableTint="?attr/colorPrimaryVariant"
+                    tools:text="4:45 pm" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvMagnitude"
+                    style="@style/Widget.EarthquakeMonitor.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/common_padding_min"
+                    android:layout_weight="1"
+                    app:drawableStartCompat="@drawable/ic_magnitude"
+                    app:drawableTint="?attr/colorPrimaryVariant"
+                    tools:text="Magnitude 6.5" />
+
+                <TextView
+                    android:id="@+id/tvDepth"
+                    style="@style/Widget.EarthquakeMonitor.TextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:drawableStartCompat="@drawable/ic_depth"
+                    app:drawableTint="?attr/colorPrimaryVariant"
+                    tools:text="Depth 5.4 km" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLocation"
+                style="@style/Widget.EarthquakeMonitor.TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_location_on"
+                app:drawableTint="?attr/colorPrimaryVariant"
+                tools:text="@string/template_location" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

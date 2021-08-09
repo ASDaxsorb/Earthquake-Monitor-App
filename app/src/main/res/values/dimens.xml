@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_padding_min">8dp</dimen>
+    <dimen name="common_padding_default">16dp</dimen>
+    <dimen name="card_height">100dp</dimen>
+    <dimen name="min_text_height">48dp</dimen>
+    <dimen name="common_radius">20dp</dimen>
+</resources>

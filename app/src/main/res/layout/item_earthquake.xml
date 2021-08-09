@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_height"
+    android:layout_marginVertical="@dimen/common_padding_min"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="@dimen/common_radius"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvMagnitude"
+            style="?attr/textAppearanceHeadline5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/common_padding_min"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="5.85" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <View
+            android:id="@+id/scaleColor"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:background="@color/purple_700"
+            app:layout_constraintBottom_toBottomOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@id/guideline3" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/common_padding_default"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/common_padding_min"
+            app:layout_constraintBottom_toBottomOf="@id/guideline3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@id/guideline3">
+
+            <TextView
+                android:id="@+id/tvPlace"
+                style="@style/Widget.EarthquakeMonitor.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:drawableStartCompat="@drawable/ic_my_location"
+                app:drawableTint="?attr/colorPrimaryVariant"
+                tools:text="Mexico City" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/Widget.EarthquakeMonitor.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_time"
+                tools:text="2021-08-06 12:30" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDepth"
+            style="@style/Widget.EarthquakeMonitor.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/common_padding_min"
+            android:gravity="bottom"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="30 km" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

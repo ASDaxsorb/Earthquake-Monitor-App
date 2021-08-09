@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Earthquake Monitor</string>
+
+    <!--  Titles  -->
+    <string name="title_recent_earthquakes">Recent earthquakes</string>
+    <string name="title_earthquake_detail">Earthquake details</string>
+    <string name="title_latest_earthquakes">Latest earthquakes:</string>
+
+    <!--  Helpers  -->
+    <string name="marker_epicenter">Epicenter</string>
+    <string name="content_go_to_epicenter">Go to epicenter</string>
+    <string name="depth">%.2f km</string>
+    <string name="button_go_to_map">Go to map</string>
+    <string name="default_earthquakes">0 \nearthquakes</string>
+
+    <!--  Template Strings  -->
+    <string name="template_magnitude">Magnitude %.2f</string>
+    <string name="template_depth">Depth %.2f km</string>
+    <string name="template_location">Location %1.2f, %2.2f</string>
+    <string name="template_earthquakes">%d \nearthquakes</string>
+</resources>
