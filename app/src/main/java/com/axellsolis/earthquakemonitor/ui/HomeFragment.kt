@@ -1,6 +1,5 @@
 package com.axellsolis.earthquakemonitor.ui
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -49,7 +48,6 @@ class HomeFragment : Fragment() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
-            setHasFixedSize(true)
         }
     }
 
@@ -86,18 +84,5 @@ class HomeFragment : Fragment() {
 
     private fun setCount(count: Int) {
         binding.tvCount.text = getString(R.string.template_earthquakes, count)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.cvEarthquakesInfo.hide()
-        }
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.cvEarthquakesInfo.show()
-        }
-
-        super.onConfigurationChanged(newConfig)
     }
 }
