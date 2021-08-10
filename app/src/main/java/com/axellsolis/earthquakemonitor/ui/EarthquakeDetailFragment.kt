@@ -20,7 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlin.math.abs
 
-@AndroidEntryPoint
 class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentEarthquakeDetailBinding
@@ -63,8 +62,8 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
         earthquakeData?.let { earthquake ->
             val time = earthquake.properties.time
             val depth = earthquake.geometry.coordinates[earthquake.geometry.coordinates.size - 1]
-            val lat = abs(earthquake.geometry.coordinates[0])
-            val lng = abs(earthquake.geometry.coordinates[1])
+            val lat = abs(earthquake.geometry.coordinates[1])
+            val lng = abs(earthquake.geometry.coordinates[0])
 
             binding.apply {
                 tvTitle.text = earthquake.properties.place

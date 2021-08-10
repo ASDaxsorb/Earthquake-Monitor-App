@@ -18,7 +18,6 @@ import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
@@ -79,6 +78,10 @@ class HomeFragment : Fragment() {
 
     private fun initUi() {
         binding.apply {
+            cvEarthquakesInfo.setOnClickListener {
+                val action = R.id.action_homeFragment_to_earthquakeMapFragment
+                findNavController().navigate(action)
+            }
         }
     }
 

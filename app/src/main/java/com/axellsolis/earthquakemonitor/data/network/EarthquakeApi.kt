@@ -6,7 +6,10 @@ import retrofit2.http.GET
 
 interface EarthquakeApi {
 
-    @GET(Constants.END_POINT)
+    @GET(Constants.ALL_DAY_END_POINT)
     suspend fun getAllDayEarthquakes(): EarthquakeResponse
+
+    @GET(Constants.ALL_HOUR_END_POINT)
+    suspend fun getAllHourEarthquakes(): EarthquakeResponse
 
 }

@@ -3,7 +3,7 @@ package com.axellsolis.earthquakemonitor.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
-import com.axellsolis.earthquakemonitor.repository.EarthquakeRepository
+import com.axellsolis.earthquakemonitor.data.repository.EarthquakeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -28,14 +28,27 @@ constructor(private val repository: EarthquakeRepository) : ViewModel() {
     val counter: StateFlow<Int> = _counter
 
     init {
-        getEarthquakes()
+        getAllDayEarthquakes()
     }
 
-    private fun getEarthquakes() {
+    private fun getAllDayEarthquakes() {
+        _earthquakeList.value = listOf()
         viewModelScope.launch {
             _progressVisible.value = true
-            repository.getAllEarthquakes().collect {
-                _earthquakeList.value = it
+            repository.getAllEarthquakes().collect { earthquakes ->
+                _earthquakeList.value = earthquakes
+                setCounter()
+            }
+            _progressVisible.value = false
+        }
+    }
+
+    private fun getLastHourEarthquakes() {
+        _earthquakeList.value = listOf()
+        viewModelScope.launch {
+            _progressVisible.value = true
+            repository.getAllHourEarthquakes().collect { earthquakes ->
+                _earthquakeList.value = earthquakes
                 setCounter()
             }
             _progressVisible.value = false
@@ -44,6 +57,7 @@ constructor(private val repository: EarthquakeRepository) : ViewModel() {
 
     private fun setCounter() {
         viewModelScope.launch {
+            _counter.value = 0
             for (n in 1.._earthquakeList.value.size) {
                 _counter.value += 1
                 delay(4)

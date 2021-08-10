@@ -18,4 +18,5 @@
     <string name="template_depth">Depth %.2f km</string>
     <string name="template_location">Location %1.2f, %2.2f</string>
     <string name="template_earthquakes">%d \nearthquakes</string>
+    <string name="title_general_map">Earthquake Map</string>
 </resources>
