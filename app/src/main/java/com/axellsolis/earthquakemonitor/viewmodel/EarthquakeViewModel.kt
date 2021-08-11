@@ -3,8 +3,10 @@ package com.axellsolis.earthquakemonitor.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
+import com.axellsolis.earthquakemonitor.data.repository.DatabaseRepository
 import com.axellsolis.earthquakemonitor.data.repository.EarthquakeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -13,7 +15,10 @@ import javax.inject.Inject
 @HiltViewModel
 class EarthquakeViewModel
 @Inject
-constructor(private val repository: EarthquakeRepository) : ViewModel() {
+constructor(
+    private val repository: EarthquakeRepository,
+    private val databaseRepository: DatabaseRepository
+) : ViewModel() {
 
     private val _progressVisible = MutableStateFlow(false)
     val progressVisible: StateFlow<Boolean> = _progressVisible
@@ -26,6 +31,9 @@ constructor(private val repository: EarthquakeRepository) : ViewModel() {
 
     private val _counter: MutableStateFlow<Int> = MutableStateFlow(0)
     val counter: StateFlow<Int> = _counter
+
+    private val _savedEarthquakes: MutableStateFlow<List<Earthquake>> = MutableStateFlow(listOf())
+    val savedEarthquakes: StateFlow<List<Earthquake>> = _savedEarthquakes
 
     init {
         getAllDayEarthquakes()
@@ -67,6 +75,26 @@ constructor(private val repository: EarthquakeRepository) : ViewModel() {
 
     fun selectItem(earthquake: Earthquake) {
         _selectedItem.value = earthquake
+    }
+
+    fun saveEarthquake() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _selectedItem.value?.let { eq ->
+                val entity = eq.toEntity()
+                databaseRepository.saveEarthquake(entity)
+            }
+        }
+    }
+
+    fun getEntities() {
+        viewModelScope.launch {
+            databaseRepository.getEarthquakesEntity().collect { entities ->
+                val list = entities.map { entity ->
+                    entity.toModel()
+                }
+                _savedEarthquakes.value = list
+            }
+        }
     }
 
 }

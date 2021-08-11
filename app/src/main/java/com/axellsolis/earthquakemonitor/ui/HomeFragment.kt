@@ -1,10 +1,8 @@
 package com.axellsolis.earthquakemonitor.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -15,7 +13,6 @@ import com.axellsolis.earthquakemonitor.ui.adapter.EarthquakeAdapter
 import com.axellsolis.earthquakemonitor.utils.hide
 import com.axellsolis.earthquakemonitor.utils.show
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 class HomeFragment : Fragment() {
@@ -37,6 +34,23 @@ class HomeFragment : Fragment() {
         setRecyclerView()
         setCollectors()
         initUi()
+
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.savedEarthquakes -> {
+                val action = R.id.action_homeFragment_to_savedEarthquakesFragment
+                findNavController().navigate(action)
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setRecyclerView() {

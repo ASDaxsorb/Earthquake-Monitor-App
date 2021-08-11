@@ -24,15 +24,42 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_savedEarthquakesFragment"
+            app:destination="@id/savedEarthquakesFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/earthquakeDetailFragment"
         android:name="com.axellsolis.earthquakemonitor.ui.EarthquakeDetailFragment"
         android:label="@string/title_earthquake_detail"
-        tools:layout="@layout/fragment_earthquake_detail" />
+        tools:layout="@layout/fragment_earthquake_detail" >
+        <argument android:name="isSaved"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <fragment
         android:id="@+id/earthquakeMapFragment"
         android:name="com.axellsolis.earthquakemonitor.ui.GeneralMapFragment"
         android:label="@string/title_general_map"
         tools:layout="@layout/fragment_earthquake_map" />
+    <fragment
+        android:id="@+id/savedEarthquakesFragment"
+        android:name="com.axellsolis.earthquakemonitor.ui.SavedEarthquakesFragment"
+        android:label="@string/title_saved_earthquakes"
+        tools:layout="@layout/fragment_saved_earthquakes" >
+        <action
+            android:id="@+id/action_savedEarthquakesFragment_to_earthquakeDetailFragment"
+            app:destination="@id/earthquakeDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" >
+            <argument
+                android:name="isSaved" />
+        </action>
+    </fragment>
 </navigation>

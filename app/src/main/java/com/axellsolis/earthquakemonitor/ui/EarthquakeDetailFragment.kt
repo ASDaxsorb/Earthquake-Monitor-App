@@ -1,22 +1,21 @@
 package com.axellsolis.earthquakemonitor.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.axellsolis.earthquakemonitor.R
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
 import com.axellsolis.earthquakemonitor.databinding.FragmentEarthquakeDetailBinding
+import com.axellsolis.earthquakemonitor.ui.SavedEarthquakesFragment.Companion.IS_SAVED_KEY
 import com.axellsolis.earthquakemonitor.utils.longToDate
 import com.axellsolis.earthquakemonitor.utils.longToTime
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlin.math.abs
 
@@ -38,8 +37,28 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         setMapFragment()
         setCollectors()
+
+        arguments?.let { bundle ->
+            val isSaved = bundle.getBoolean(IS_SAVED_KEY)
+            setHasOptionsMenu(!isSaved)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.savedEarthquakes -> {
+                onSaveEarthquake()
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setMapFragment() {
@@ -100,5 +119,10 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
             }
 
         }
+    }
+
+    private fun onSaveEarthquake() {
+        earthquakeViewModel.saveEarthquake()
+        Snackbar.make(requireView(), "Store saved", Snackbar.LENGTH_SHORT).show()
     }
 }

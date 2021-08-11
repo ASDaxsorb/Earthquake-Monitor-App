@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

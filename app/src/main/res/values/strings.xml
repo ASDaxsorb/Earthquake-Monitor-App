@@ -5,6 +5,8 @@
     <string name="title_recent_earthquakes">Recent earthquakes</string>
     <string name="title_earthquake_detail">Earthquake details</string>
     <string name="title_latest_earthquakes">Latest earthquakes:</string>
+    <string name="title_general_map">Earthquake Map</string>
+    <string name="title_saved_earthquakes">Saved Earthquakes</string>
 
     <!--  Helpers  -->
     <string name="marker_epicenter">Epicenter</string>
@@ -18,5 +20,5 @@
     <string name="template_depth">Depth %.2f km</string>
     <string name="template_location">Location %1.2f, %2.2f</string>
     <string name="template_earthquakes">%d \nearthquakes</string>
-    <string name="title_general_map">Earthquake Map</string>
+    <string name="helper_no_earthquakes_saved">No saved earthquakes</string>
 </resources>
