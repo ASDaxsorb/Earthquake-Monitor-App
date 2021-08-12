@@ -32,7 +32,7 @@ constructor(
     private val _counter: MutableStateFlow<Int> = MutableStateFlow(0)
     val counter: StateFlow<Int> = _counter
 
-    private val _savedEarthquakes: MutableStateFlow<List<Earthquake>> = MutableStateFlow(listOf())
+    private val _savedEarthquakes: MutableStateFlow<List<Earthquake>> = MutableStateFlow(mutableListOf())
     val savedEarthquakes: StateFlow<List<Earthquake>> = _savedEarthquakes
 
     init {
@@ -97,4 +97,16 @@ constructor(
         }
     }
 
+    fun deleteEarthquake(earthquake: Earthquake) {
+        val newList = _savedEarthquakes.value.toMutableList()
+        val isDeleted = newList.remove(earthquake)
+        val id = earthquake.id.toInt()
+        if (isDeleted) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val entity = databaseRepository.getEarthquake(id)
+                databaseRepository.deleteEarthquake(entity)
+                _savedEarthquakes.value = newList
+            }
+        }
+    }
 }

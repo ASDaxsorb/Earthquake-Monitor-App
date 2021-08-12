@@ -11,7 +11,7 @@ interface EarthquakeDao {
     fun getAllEarthquakes(): Flow<List<EarthquakeEntity>>
 
     @Query("SELECT * FROM earthquake WHERE id = :id")
-    fun getEarthquake(id: Int): Flow<EarthquakeEntity>
+    suspend fun getEarthquake(id: Int): EarthquakeEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveEarthquake(earthquakeEntity: EarthquakeEntity)

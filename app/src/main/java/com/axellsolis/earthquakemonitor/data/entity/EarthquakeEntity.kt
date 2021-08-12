@@ -26,7 +26,7 @@ data class EarthquakeEntity(
     val depth: Double
 ) {
     fun toModel(): Earthquake {
-        val coordinates: List<Double> = listOf(longitude, magnitude, depth)
+        val coordinates: List<Double> = listOf(longitude, latitude, depth)
         val properties = Properties(magnitude, place, time)
         val geometry = Geometry(coordinates)
 

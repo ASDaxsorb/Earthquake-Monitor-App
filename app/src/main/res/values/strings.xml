@@ -7,6 +7,7 @@
     <string name="title_latest_earthquakes">Latest earthquakes:</string>
     <string name="title_general_map">Earthquake Map</string>
     <string name="title_saved_earthquakes">Saved Earthquakes</string>
+    <string name="title_category_theme">Theme</string>
 
     <!--  Helpers  -->
     <string name="marker_epicenter">Epicenter</string>
@@ -21,4 +22,6 @@
     <string name="template_location">Location %1.2f, %2.2f</string>
     <string name="template_earthquakes">%d \nearthquakes</string>
     <string name="helper_no_earthquakes_saved">No saved earthquakes</string>
+    <string name="title_preference_dark_mode">Enable dark mode</string>
+    <string name="title_menu_settings">Settings</string>
 </resources>

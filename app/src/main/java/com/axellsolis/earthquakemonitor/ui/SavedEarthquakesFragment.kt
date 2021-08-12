@@ -14,11 +14,13 @@ import com.axellsolis.earthquakemonitor.R
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
 import com.axellsolis.earthquakemonitor.databinding.FragmentSavedEarthquakesBinding
 import com.axellsolis.earthquakemonitor.ui.adapter.EarthquakeAdapter
+import com.axellsolis.earthquakemonitor.utils.ItemClickListener
 import com.axellsolis.earthquakemonitor.utils.hide
+import com.axellsolis.earthquakemonitor.utils.show
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import kotlinx.coroutines.flow.collect
 
-class SavedEarthquakesFragment : Fragment() {
+class SavedEarthquakesFragment : Fragment(), ItemClickListener {
 
     companion object {
         const val IS_SAVED_KEY = "isSaved"
@@ -44,9 +46,7 @@ class SavedEarthquakesFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-        mAdapter = EarthquakeAdapter {
-            onItemSelect(it)
-        }
+        mAdapter = EarthquakeAdapter(this)
         binding.recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(requireContext())
@@ -58,15 +58,21 @@ class SavedEarthquakesFragment : Fragment() {
             viewModel.savedEarthquakes.collect { earthquakes ->
                 if (earthquakes.isNotEmpty()) {
                     binding.noEarthquakesError.hide()
+                } else {
+                    binding.noEarthquakesError.show()
                 }
                 mAdapter.submitList(earthquakes)
             }
         }
     }
 
-    private fun onItemSelect(earthquake: Earthquake) {
+    override fun onClick(earthquake: Earthquake) {
         viewModel.selectItem(earthquake)
         val action = R.id.action_savedEarthquakesFragment_to_earthquakeDetailFragment
         findNavController().navigate(action, bundleOf(IS_SAVED_KEY to true))
+    }
+
+    override fun onLongClick(earthquake: Earthquake) {
+        viewModel.deleteEarthquake(earthquake)
     }
 }

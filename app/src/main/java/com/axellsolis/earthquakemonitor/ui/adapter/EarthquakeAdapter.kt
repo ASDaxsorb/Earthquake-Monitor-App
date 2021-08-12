@@ -8,20 +8,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.axellsolis.earthquakemonitor.R
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
 import com.axellsolis.earthquakemonitor.databinding.ItemEarthquakeBinding
+import com.axellsolis.earthquakemonitor.utils.ItemClickListener
 import com.axellsolis.earthquakemonitor.utils.getScaleColor
 import com.axellsolis.earthquakemonitor.utils.longToDate
 
-class EarthquakeAdapter(val onClickItem: (Earthquake) -> Unit) :
+class EarthquakeAdapter(
+    private val listener: ItemClickListener
+) :
     ListAdapter<Earthquake, EarthquakeAdapter.EarthquakeViewHolder>(DiffCallback) {
 
     inner class EarthquakeViewHolder(
         private val binding: ItemEarthquakeBinding,
+        private val onLongClick: (Int) -> Unit,
         private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
                 onClick(adapterPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                onLongClick(adapterPosition)
+                true
             }
         }
 
@@ -46,8 +55,21 @@ class EarthquakeAdapter(val onClickItem: (Earthquake) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EarthquakeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemEarthquakeBinding.inflate(inflater, parent, false)
-        return EarthquakeViewHolder(binding) { position ->
-            onClickItem(getItem(position))
+
+        return EarthquakeViewHolder(
+            binding,
+            onLongClick = { position ->
+                listener.onLongClick(getItem(position))
+            }
+        ) { position ->
+            listener.onClick(getItem(position))
+        }
+    }
+
+    fun deleteItem(earthquake: Earthquake) {
+        val index = currentList.indexOf(earthquake)
+        if (index != -1) {
+            notifyItemRemoved(index)
         }
     }
 

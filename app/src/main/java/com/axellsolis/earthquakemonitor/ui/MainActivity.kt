@@ -2,9 +2,11 @@ package com.axellsolis.earthquakemonitor.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.preference.PreferenceManager
 import com.axellsolis.earthquakemonitor.R
 import com.axellsolis.earthquakemonitor.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +27,14 @@ class MainActivity : AppCompatActivity() {
         navController = navHost.navController
 
         setupActionBarWithNavController(navController)
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val isDarkModeEnabled = preferences.getBoolean("darkMode", false)
+        if (isDarkModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

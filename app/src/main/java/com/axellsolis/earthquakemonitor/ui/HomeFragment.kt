@@ -8,14 +8,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.axellsolis.earthquakemonitor.R
+import com.axellsolis.earthquakemonitor.data.model.Earthquake
 import com.axellsolis.earthquakemonitor.databinding.FragmentHomeBinding
 import com.axellsolis.earthquakemonitor.ui.adapter.EarthquakeAdapter
+import com.axellsolis.earthquakemonitor.utils.ItemClickListener
 import com.axellsolis.earthquakemonitor.utils.hide
 import com.axellsolis.earthquakemonitor.utils.show
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import kotlinx.coroutines.flow.collect
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mAdapter: EarthquakeAdapter
@@ -49,15 +51,17 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
                 true
             }
+            R.id.settings -> {
+                val action = R.id.action_homeFragment_to_settingsFragment
+                findNavController().navigate(action)
+                true
+            }
             else -> false
         }
     }
 
     private fun setRecyclerView() {
-        mAdapter = EarthquakeAdapter {
-            earthquakeViewModel.selectItem(it)
-            findNavController().navigate(R.id.action_homeFragment_to_earthquakeDetailFragment)
-        }
+        mAdapter = EarthquakeAdapter(this)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
@@ -101,5 +105,14 @@ class HomeFragment : Fragment() {
 
     private fun setCount(count: Int) {
         binding.tvCount.text = getString(R.string.template_earthquakes, count)
+    }
+
+    override fun onClick(earthquake: Earthquake) {
+        earthquakeViewModel.selectItem(earthquake)
+        findNavController().navigate(R.id.action_homeFragment_to_earthquakeDetailFragment)
+    }
+
+    override fun onLongClick(earthquake: Earthquake) {
+
     }
 }

@@ -14,9 +14,10 @@
         tools:listitem="@layout/item_earthquake" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/noEarthquakesError"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/noEarthquakesError">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="100dp"

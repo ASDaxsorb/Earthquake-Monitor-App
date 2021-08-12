@@ -20,4 +20,10 @@ constructor(private val dao: EarthquakeDao) {
         dao.saveEarthquake(earthquakeEntity)
     }
 
+    suspend fun deleteEarthquake(earthquakeEntity: EarthquakeEntity) {
+        dao.deleteItem(earthquakeEntity)
+    }
+
+    suspend fun getEarthquake(id: Int): EarthquakeEntity = dao.getEarthquake(id)
+
 }

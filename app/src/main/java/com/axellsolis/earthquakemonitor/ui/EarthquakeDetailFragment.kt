@@ -123,6 +123,7 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun onSaveEarthquake() {
         earthquakeViewModel.saveEarthquake()
+        setHasOptionsMenu(false)
         Snackbar.make(requireView(), "Store saved", Snackbar.LENGTH_SHORT).show()
     }
 }
