@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -21,10 +20,6 @@ import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import kotlinx.coroutines.flow.collect
 
 class SavedEarthquakesFragment : Fragment(), ItemClickListener {
-
-    companion object {
-        const val IS_SAVED_KEY = "isSaved"
-    }
 
     private lateinit var binding: FragmentSavedEarthquakesBinding
     private lateinit var mAdapter: EarthquakeAdapter
@@ -68,8 +63,8 @@ class SavedEarthquakesFragment : Fragment(), ItemClickListener {
 
     override fun onClick(earthquake: Earthquake) {
         viewModel.selectItem(earthquake)
-        val action = R.id.action_savedEarthquakesFragment_to_earthquakeDetailFragment
-        findNavController().navigate(action, bundleOf(IS_SAVED_KEY to true))
+        val action = R.id.action_viewPagerFragment_to_earthquakeDetailFragment
+        findNavController().navigate(action)
     }
 
     override fun onLongClick(earthquake: Earthquake) {

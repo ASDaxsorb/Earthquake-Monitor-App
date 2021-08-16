@@ -1,5 +1,6 @@
 package com.axellsolis.earthquakemonitor.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
@@ -40,6 +41,7 @@ constructor(
     }
 
     private fun getAllDayEarthquakes() {
+        Log.d("Earthquakes", "getAllDayEarthquakes: ")
         _earthquakeList.value = listOf()
         viewModelScope.launch {
             _progressVisible.value = true

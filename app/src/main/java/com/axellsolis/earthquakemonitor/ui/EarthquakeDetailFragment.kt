@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.axellsolis.earthquakemonitor.R
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
 import com.axellsolis.earthquakemonitor.databinding.FragmentEarthquakeDetailBinding
-import com.axellsolis.earthquakemonitor.ui.SavedEarthquakesFragment.Companion.IS_SAVED_KEY
 import com.axellsolis.earthquakemonitor.utils.longToDate
 import com.axellsolis.earthquakemonitor.utils.longToTime
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
@@ -40,26 +39,8 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
         setMapFragment()
         setCollectors()
-
-        arguments?.let { bundle ->
-            val isSaved = bundle.getBoolean(IS_SAVED_KEY)
-            setHasOptionsMenu(!isSaved)
-        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.savedEarthquakes -> {
-                onSaveEarthquake()
-                true
-            }
-            else -> false
-        }
-    }
 
     private fun setMapFragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -123,7 +104,6 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun onSaveEarthquake() {
         earthquakeViewModel.saveEarthquake()
-        setHasOptionsMenu(false)
         Snackbar.make(requireView(), "Store saved", Snackbar.LENGTH_SHORT).show()
     }
 }

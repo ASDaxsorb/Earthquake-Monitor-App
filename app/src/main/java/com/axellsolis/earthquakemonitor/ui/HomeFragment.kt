@@ -35,29 +35,6 @@ class HomeFragment : Fragment(), ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setRecyclerView()
         setCollectors()
-        initUi()
-
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.savedEarthquakes -> {
-                val action = R.id.action_homeFragment_to_savedEarthquakesFragment
-                findNavController().navigate(action)
-                true
-            }
-            R.id.settings -> {
-                val action = R.id.action_homeFragment_to_settingsFragment
-                findNavController().navigate(action)
-                true
-            }
-            else -> false
-        }
     }
 
     private fun setRecyclerView() {
@@ -86,30 +63,17 @@ class HomeFragment : Fragment(), ItemClickListener {
                 }
             }
         }
-
-        lifecycleScope.launchWhenStarted {
-            earthquakeViewModel.counter.collect {
-                setCount(it)
-            }
-        }
     }
 
-    private fun initUi() {
-        binding.apply {
-            cvEarthquakesInfo.setOnClickListener {
-                val action = R.id.action_homeFragment_to_earthquakeMapFragment
-                findNavController().navigate(action)
-            }
+    fun scrollToTop() {
+        view?.let {
+            binding.recyclerView.smoothScrollToPosition(0)
         }
-    }
-
-    private fun setCount(count: Int) {
-        binding.tvCount.text = getString(R.string.template_earthquakes, count)
     }
 
     override fun onClick(earthquake: Earthquake) {
         earthquakeViewModel.selectItem(earthquake)
-        findNavController().navigate(R.id.action_homeFragment_to_earthquakeDetailFragment)
+        findNavController().navigate(R.id.action_viewPagerFragment_to_earthquakeDetailFragment)
     }
 
     override fun onLongClick(earthquake: Earthquake) {
