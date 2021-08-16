@@ -1,10 +1,8 @@
 package com.axellsolis.earthquakemonitor.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.axellsolis.earthquakemonitor.R
@@ -16,11 +14,10 @@ import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlin.math.abs
 
-@AndroidEntryPoint
 class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentEarthquakeDetailBinding
@@ -36,6 +33,20 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
     ): View {
         binding = FragmentEarthquakeDetailBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.save -> {
+                onSaveEarthquake()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,10 +72,11 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun initUi() {
         earthquakeData?.let { earthquake ->
+            setHasOptionsMenu(!earthquake.isSaved)
             val time = earthquake.properties.time
             val depth = earthquake.geometry.coordinates[earthquake.geometry.coordinates.size - 1]
-            val lat = abs(earthquake.geometry.coordinates[0])
-            val lng = abs(earthquake.geometry.coordinates[1])
+            val lat = abs(earthquake.geometry.coordinates[1])
+            val lng = abs(earthquake.geometry.coordinates[0])
 
             binding.apply {
                 tvTitle.text = earthquake.properties.place
@@ -101,5 +113,15 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
             }
 
         }
+    }
+
+    private fun onSaveEarthquake() {
+        earthquakeViewModel.saveEarthquake()
+        setHasOptionsMenu(false)
+        Snackbar.make(
+            requireView(),
+            getString(R.string.snack_bar_earthquake_saved),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }

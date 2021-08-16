@@ -1,27 +1,28 @@
-package com.axellsolis.earthquakemonitor.repository
+package com.axellsolis.earthquakemonitor.data.repository
 
 import com.axellsolis.earthquakemonitor.data.model.Earthquake
-import com.axellsolis.earthquakemonitor.data.model.EarthquakeResponse
 import com.axellsolis.earthquakemonitor.data.network.EarthquakeApi
+import com.axellsolis.earthquakemonitor.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EarthquakeRepository
+class GeneralMapRepository
 @Inject
 constructor(private val api: EarthquakeApi) {
-    fun getAllEarthquakes(): Flow<List<Earthquake>> = flow {
+
+    fun getAllHourEarthquakes(): Flow<List<Earthquake>> = flow {
         kotlin.runCatching {
-            api.getAllDayEarthquakes()
-        }.onSuccess {
-            if (it.metadata.status == 200) {
-                emit(it.earthquakes)
+            api.getAllHourEarthquakes()
+        }.onSuccess { response ->
+            if (response.metadata.status == Constants.STATUS_OK) {
+                emit(response.earthquakes)
             }
         }
     }.flowOn(Dispatchers.IO)
+
 }

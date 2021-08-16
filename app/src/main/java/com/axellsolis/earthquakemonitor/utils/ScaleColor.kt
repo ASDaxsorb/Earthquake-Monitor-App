@@ -8,15 +8,15 @@ import com.axellsolis.earthquakemonitor.R
 @ColorInt
 fun getScaleColor(context: Context, magnitude: Double): Int {
 
-    if (magnitude < 5.5) {
+    if (magnitude < 4.00) {
         return ContextCompat.getColor(context, R.color.green)
     }
 
-    if (magnitude > 5.5 && magnitude < 6.1) {
+    if (magnitude > 4.00 && magnitude < 6.10) {
         return ContextCompat.getColor(context, R.color.yellow)
     }
 
-    if (magnitude > 6.1 && magnitude < 7.0) {
+    if (magnitude > 6.10 && magnitude < 7.00) {
         return ContextCompat.getColor(context, R.color.orange)
     }
 

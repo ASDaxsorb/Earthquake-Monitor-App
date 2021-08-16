@@ -1,27 +1,28 @@
 package com.axellsolis.earthquakemonitor.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.axellsolis.earthquakemonitor.R
-import com.axellsolis.earthquakemonitor.databinding.FragmentHomeBinding
+import com.axellsolis.earthquakemonitor.data.model.Earthquake
+import com.axellsolis.earthquakemonitor.databinding.FragmentLatestEarthquakesBinding
 import com.axellsolis.earthquakemonitor.ui.adapter.EarthquakeAdapter
+import com.axellsolis.earthquakemonitor.utils.ItemClickListener
 import com.axellsolis.earthquakemonitor.utils.hide
 import com.axellsolis.earthquakemonitor.utils.show
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 
-@AndroidEntryPoint
-class HomeFragment : Fragment() {
+class LatestEarthquakesFragment : Fragment(), ItemClickListener {
 
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentLatestEarthquakesBinding
     private lateinit var mAdapter: EarthquakeAdapter
     private val earthquakeViewModel by activityViewModels<EarthquakeViewModel>()
 
@@ -30,21 +31,17 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentLatestEarthquakesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setRecyclerView()
         setCollectors()
-        initUi()
     }
 
     private fun setRecyclerView() {
-        mAdapter = EarthquakeAdapter {
-            earthquakeViewModel.selectItem(it)
-            findNavController().navigate(R.id.action_homeFragment_to_earthquakeDetailFragment)
-        }
+        mAdapter = EarthquakeAdapter(this)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mAdapter
@@ -69,20 +66,37 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
 
-        lifecycleScope.launchWhenStarted {
-            earthquakeViewModel.counter.collect {
-                setCount(it)
-            }
+    fun scrollToTop() {
+        view?.let {
+            binding.recyclerView.smoothScrollToPosition(0)
         }
     }
 
-    private fun initUi() {
-        binding.apply {
-        }
+    override fun onClick(earthquake: Earthquake) {
+        earthquakeViewModel.selectItem(earthquake)
+        findNavController().navigate(R.id.action_viewPagerFragment_to_earthquakeDetailFragment)
     }
 
-    private fun setCount(count: Int) {
-        binding.tvCount.text = getString(R.string.template_earthquakes, count)
+    override fun onLongClick(earthquake: Earthquake) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.dialog_save_earthquake)
+            .setPositiveButton(R.string.button_yes) { _, _ ->
+                onSaveEarthquake(earthquake)
+            }.setNegativeButton(R.string.button_no, null).show()
+    }
+
+    private fun onSaveEarthquake(earthquake: Earthquake) {
+        earthquakeViewModel.saveEarthquake(earthquake)
+        Snackbar.make(
+            requireView(),
+            getString(R.string.snack_bar_earthquake_saved),
+            Snackbar.LENGTH_SHORT
+        ).show()
+        val pager = requireActivity().findViewById<ViewPager2>(R.id.viewPager)
+        pager?.let {
+            it.currentItem = 1
+        }
     }
 }

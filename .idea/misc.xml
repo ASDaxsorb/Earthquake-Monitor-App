@@ -6,13 +6,22 @@
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/drawable/ic_location.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/drawable/ic_map.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/drawable/ic_my_location.xml" value="0.15648148148148147" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/drawable/ic_no_earthquakes.xml" value="0.13425925925925927" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/drawable/ic_time.xml" value="0.15648148148148147" />
-        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/activity_main.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/activity_main.xml" value="0.1685185185185185" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/fragment_earthquake_detail.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/fragment_earthquake_map.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/fragment_home.xml" value="0.19444444444444445" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/fragment_saved_earthquakes.xml" value="0.13217138707334786" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/fragment_view_pager.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/item_earthquake.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/item_earthquake_card.xml" value="0.19444444444444445" />
         <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/layout/item_header.xml" value="0.36428571428571427" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/menu/menu.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/menu/menu_detail.xml" value="0.1" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.13425925925925927" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.13425925925925927" />
+        <entry key="..\:/Users/axell/AndroidStudioProjects/EarthquakeMonitor/app/src/main/res/xml/preference_screen.xml" value="0.25" />
       </map>
     </option>
   </component>
