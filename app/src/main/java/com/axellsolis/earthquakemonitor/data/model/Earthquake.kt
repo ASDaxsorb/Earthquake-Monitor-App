@@ -10,6 +10,7 @@ data class Earthquake(
     val geometry: Geometry,
     @SerializedName("properties")
     val properties: Properties,
+    var isSaved: Boolean = false
 ) {
     fun toEntity(): EarthquakeEntity = EarthquakeEntity(
         place = properties.place,
@@ -17,6 +18,7 @@ data class Earthquake(
         time = properties.time,
         latitude = geometry.coordinates[1],
         longitude = geometry.coordinates[0],
-        depth = geometry.coordinates[2]
+        depth = geometry.coordinates[2],
+        isSaved = isSaved
     )
 }

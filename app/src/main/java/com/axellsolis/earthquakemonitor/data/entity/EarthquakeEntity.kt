@@ -23,7 +23,9 @@ data class EarthquakeEntity(
     @ColumnInfo(name = "longitude")
     val longitude: Double,
     @ColumnInfo(name = "depth")
-    val depth: Double
+    val depth: Double,
+    @ColumnInfo(name = "is_saved")
+    var isSaved: Boolean
 ) {
     fun toModel(): Earthquake {
         val coordinates: List<Double> = listOf(longitude, latitude, depth)
@@ -33,7 +35,8 @@ data class EarthquakeEntity(
         return Earthquake(
             id.toString(),
             properties = properties,
-            geometry = geometry
+            geometry = geometry,
+            isSaved = isSaved
         )
     }
 }

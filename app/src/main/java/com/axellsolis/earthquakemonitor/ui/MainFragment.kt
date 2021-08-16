@@ -8,16 +8,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.axellsolis.earthquakemonitor.R
-import com.axellsolis.earthquakemonitor.databinding.FragmentViewPagerBinding
+import com.axellsolis.earthquakemonitor.databinding.FragmentMainBinding
 import com.axellsolis.earthquakemonitor.ui.adapter.ViewPagerAdapter
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.flow.collect
 
-class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
+class MainFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
-    private lateinit var binding: FragmentViewPagerBinding
+    private lateinit var binding: FragmentMainBinding
     private lateinit var mPagerAdapter: ViewPagerAdapter
     private val earthquakeViewModel by activityViewModels<EarthquakeViewModel>()
 
@@ -26,7 +26,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentViewPagerBinding.inflate(inflater, container, false)
+        binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,8 +44,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.settings -> {
-                val action = R.id.action_viewPagerFragment_to_settingsFragment
-                findNavController().navigate(action)
+                onSettingsSelected()
                 true
             }
             else -> false
@@ -54,7 +53,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     private fun setUpViewPager() {
         val fragments = arrayListOf<Fragment>(
-            HomeFragment(),
+            LatestEarthquakesFragment(),
             SavedEarthquakesFragment()
         )
         val manager = childFragmentManager
@@ -65,9 +64,17 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
 
     private fun initUi() {
         setHasOptionsMenu(true)
-
         binding.apply {
+            setTabLayout()
+            cvEarthquakesInfo.setOnClickListener {
+                val action = R.id.action_viewPagerFragment_to_earthquakeMapFragment
+                findNavController().navigate(action)
+            }
+        }
+    }
 
+    private fun setTabLayout() {
+        binding.apply {
             val tabLayoutMediator =
                 TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                     when (position) {
@@ -82,13 +89,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
                     }
                 }
             tabLayoutMediator.attach()
-
-            tabLayout.addOnTabSelectedListener(this@ViewPagerFragment)
-
-            cvEarthquakesInfo.setOnClickListener {
-                val action = R.id.action_viewPagerFragment_to_earthquakeMapFragment
-                findNavController().navigate(action)
-            }
+            tabLayout.addOnTabSelectedListener(this@MainFragment)
         }
     }
 
@@ -104,6 +105,11 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
         binding.tvCount.text = getString(R.string.template_earthquakes, count)
     }
 
+    private fun onSettingsSelected() {
+        val action = R.id.action_viewPagerFragment_to_settingsFragment
+        findNavController().navigate(action)
+    }
+
     override fun onTabSelected(tab: TabLayout.Tab?) {
 
     }
@@ -115,7 +121,7 @@ class ViewPagerFragment : Fragment(), TabLayout.OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab?) {
         tab?.let {
             if (it.position == 0) {
-                val homeFragment = childFragmentManager.findFragmentByTag("f0") as HomeFragment
+                val homeFragment = childFragmentManager.findFragmentByTag("f0") as LatestEarthquakesFragment
                 homeFragment.scrollToTop()
             }
         }

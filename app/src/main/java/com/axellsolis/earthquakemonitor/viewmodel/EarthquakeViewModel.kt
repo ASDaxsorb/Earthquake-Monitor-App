@@ -33,7 +33,8 @@ constructor(
     private val _counter: MutableStateFlow<Int> = MutableStateFlow(0)
     val counter: StateFlow<Int> = _counter
 
-    private val _savedEarthquakes: MutableStateFlow<List<Earthquake>> = MutableStateFlow(mutableListOf())
+    private val _savedEarthquakes: MutableStateFlow<List<Earthquake>> =
+        MutableStateFlow(mutableListOf())
     val savedEarthquakes: StateFlow<List<Earthquake>> = _savedEarthquakes
 
     init {
@@ -46,18 +47,6 @@ constructor(
         viewModelScope.launch {
             _progressVisible.value = true
             repository.getAllEarthquakes().collect { earthquakes ->
-                _earthquakeList.value = earthquakes
-                setCounter()
-            }
-            _progressVisible.value = false
-        }
-    }
-
-    private fun getLastHourEarthquakes() {
-        _earthquakeList.value = listOf()
-        viewModelScope.launch {
-            _progressVisible.value = true
-            repository.getAllHourEarthquakes().collect { earthquakes ->
                 _earthquakeList.value = earthquakes
                 setCounter()
             }
@@ -82,9 +71,18 @@ constructor(
     fun saveEarthquake() {
         viewModelScope.launch(Dispatchers.IO) {
             _selectedItem.value?.let { eq ->
+                eq.isSaved = true
                 val entity = eq.toEntity()
                 databaseRepository.saveEarthquake(entity)
             }
+        }
+    }
+
+    fun saveEarthquake(earthquake: Earthquake) {
+        viewModelScope.launch(Dispatchers.IO) {
+            earthquake.isSaved = true
+            val entity = earthquake.toEntity()
+            databaseRepository.saveEarthquake(entity)
         }
     }
 

@@ -35,12 +35,24 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.save -> {
+                onSaveEarthquake()
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setMapFragment()
         setCollectors()
     }
-
 
     private fun setMapFragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -60,6 +72,7 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun initUi() {
         earthquakeData?.let { earthquake ->
+            setHasOptionsMenu(!earthquake.isSaved)
             val time = earthquake.properties.time
             val depth = earthquake.geometry.coordinates[earthquake.geometry.coordinates.size - 1]
             val lat = abs(earthquake.geometry.coordinates[1])
@@ -104,6 +117,11 @@ class EarthquakeDetailFragment : Fragment(), OnMapReadyCallback {
 
     private fun onSaveEarthquake() {
         earthquakeViewModel.saveEarthquake()
-        Snackbar.make(requireView(), "Store saved", Snackbar.LENGTH_SHORT).show()
+        setHasOptionsMenu(false)
+        Snackbar.make(
+            requireView(),
+            getString(R.string.snack_bar_earthquake_saved),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }

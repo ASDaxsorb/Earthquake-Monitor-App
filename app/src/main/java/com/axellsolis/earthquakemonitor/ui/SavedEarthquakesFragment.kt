@@ -17,6 +17,7 @@ import com.axellsolis.earthquakemonitor.utils.ItemClickListener
 import com.axellsolis.earthquakemonitor.utils.hide
 import com.axellsolis.earthquakemonitor.utils.show
 import com.axellsolis.earthquakemonitor.viewmodel.EarthquakeViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.flow.collect
 
 class SavedEarthquakesFragment : Fragment(), ItemClickListener {
@@ -68,6 +69,13 @@ class SavedEarthquakesFragment : Fragment(), ItemClickListener {
     }
 
     override fun onLongClick(earthquake: Earthquake) {
-        viewModel.deleteEarthquake(earthquake)
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.dialog_delete_earthquake)
+            .setPositiveButton(R.string.button_yes) { _, _ ->
+                viewModel.deleteEarthquake(earthquake)
+            }
+            .setNegativeButton(R.string.button_no, null)
+            .setCancelable(false)
+            .show()
     }
 }

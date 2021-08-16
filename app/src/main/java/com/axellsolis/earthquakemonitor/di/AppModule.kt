@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.axellsolis.earthquakemonitor.data.network.EarthquakeApi
 import com.axellsolis.earthquakemonitor.db.EarthquakeDataBase
+import com.axellsolis.earthquakemonitor.db.Migrations.MIGRATION_1_2
 import com.axellsolis.earthquakemonitor.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -37,7 +38,7 @@ object AppModule {
         contextApp,
         EarthquakeDataBase::class.java,
         "db_earthquake"
-    ).build()
+    ).addMigrations(MIGRATION_1_2).build()
 
     @Provides
     @Singleton
