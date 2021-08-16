@@ -121,8 +121,9 @@ class MainFragment : Fragment(), TabLayout.OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab?) {
         tab?.let {
             if (it.position == 0) {
-                val homeFragment = childFragmentManager.findFragmentByTag("f0") as LatestEarthquakesFragment
-                homeFragment.scrollToTop()
+                val latestEarthquakesFragment =
+                    childFragmentManager.findFragmentByTag("f0") as LatestEarthquakesFragment
+                latestEarthquakesFragment.scrollToTop()
             }
         }
     }
